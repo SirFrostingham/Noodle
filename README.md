@@ -1,4 +1,5 @@
 Noodle AI
+
 	- This application is for experimenting with AI
 	- My intent is simply to mess around with something that is AI'ish :)
 	- It is a functional work in progress application

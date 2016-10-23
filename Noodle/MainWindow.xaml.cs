@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using FirstFloor.ModernUI.Windows.Controls;
 using Noodle.Core;
+using Noodle.Managers;
 
 namespace Noodle
 {
@@ -46,6 +47,9 @@ namespace Noodle
                 if (!IsRunAsAdmin())
                     Application.Current.Shutdown();
             }
+
+            //get WordModels
+            FileManager.GetWordModels();
 
             var schTh = new Thread(new Scheduler().SchedulerLoop);          // Kick off a new thread
             schTh.Start();

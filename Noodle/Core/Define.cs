@@ -13,13 +13,14 @@ namespace Noodle.Core
     public class Define
     {
         const string IndentReponse = "  ";
+
         public void TextInputLoop()
         {
             //endless loop
             int i = -1;
             while (i == -1)
             {
-                Console.WriteLine("Enter input:"); // Prompt
+                Console.WriteLine("\r\nEnter input:"); // Prompt
                 string line = Console.ReadLine(); // Get string from user
                 if (line == "exit") // Check string
                 {
@@ -34,7 +35,9 @@ namespace Noodle.Core
 
                 // or automatically deserialize result
                 // return content type is sniffed but can be explicitly set via RestClient.AddHandler();
-                RestResponse<DictionaryLookupModel.RootObject> response = (RestResponse<DictionaryLookupModel.RootObject>)client.Execute<DictionaryLookupModel.RootObject>(request);
+                RestResponse<DictionaryLookupModel.RootObject> response =
+                    (RestResponse<DictionaryLookupModel.RootObject>)
+                        client.Execute<DictionaryLookupModel.RootObject>(request);
 
                 if (response.Data.meanings != null)
                 {
@@ -42,12 +45,16 @@ namespace Noodle.Core
                     //https://glosbe.com/gapi/translate?from=eng&dest=eng&format=json&phrase=disgusting&pretty=true
                     //http://dictionary-lookup.org/disgusting
                     var client2 = new RestClient("https://glosbe.com/");
-                    var request2 = new RestRequest("gapi/translate?from=eng&dest=eng&format=json&phrase={word}&pretty=true", Method.GET);
+                    var request2 =
+                        new RestRequest("gapi/translate?from=eng&dest=eng&format=json&phrase={word}&pretty=true",
+                            Method.GET);
                     request2.AddUrlSegment("word", line); // replaces matching token in request.Resource
 
                     // or automatically deserialize result
                     // return content type is sniffed but can be explicitly set via RestClient.AddHandler();
-                    var response2 = (RestResponse<GlosbeResponseJsonModel.RootObject>)client2.Execute<GlosbeResponseJsonModel.RootObject>(request2);
+                    var response2 =
+                        (RestResponse<GlosbeResponseJsonModel.RootObject>)
+                            client2.Execute<GlosbeResponseJsonModel.RootObject>(request2);
 
                     if (response2.Data != null)
                     {
@@ -67,7 +74,8 @@ namespace Noodle.Core
                         var listDeDupedResponses = responseList.Distinct().ToList();
                         foreach (var listDeDupedResponse in listDeDupedResponses)
                         {
-                            Console.WriteLine(IndentReponse + HtmlHelper.StripHtml(System.Web.HttpUtility.HtmlDecode(listDeDupedResponse)));
+                            Console.WriteLine(IndentReponse +
+                                              HtmlHelper.StripHtml(System.Web.HttpUtility.HtmlDecode(listDeDupedResponse)));
                         }
                     }
                     else
@@ -76,7 +84,8 @@ namespace Noodle.Core
                         // EXAMPLE: Console.Write(response.Data.meanings[0].content);
                         foreach (var meaning in response.Data.meanings)
                         {
-                            Console.WriteLine(IndentReponse + HtmlHelper.StripHtml(System.Web.HttpUtility.HtmlDecode(meaning.content)));
+                            Console.WriteLine(IndentReponse +
+                                              HtmlHelper.StripHtml(System.Web.HttpUtility.HtmlDecode(meaning.content)));
                         }
                     }
                 }
@@ -84,11 +93,13 @@ namespace Noodle.Core
                 {
                     //SUGGESTIONS
                     //deserialize json object
-                    var responseSuggestion = JsonConvert.DeserializeObject<DictionaryLookupSuggestionsModel.RootObject>(response.Content);
+                    var responseSuggestion =
+                        JsonConvert.DeserializeObject<DictionaryLookupSuggestionsModel.RootObject>(response.Content);
 
                     if (responseSuggestion.suggestions != null)
                     {
-                        Console.WriteLine(IndentReponse + "Did you mean {0}?", string.Join(",", responseSuggestion.suggestions));
+                        Console.WriteLine(IndentReponse + "Did you mean {0}?",
+                            string.Join(",", responseSuggestion.suggestions));
                     }
                     else
                     {
@@ -99,6 +110,42 @@ namespace Noodle.Core
                 //Console.Write("You typed "); // Report output
                 //Console.Write(line.Length);
                 //Console.WriteLine(" character(s)");
+
+                //1st shot at emotion
+                foreach (var wordModel in Globals.Current.WordModels)
+                {
+                    if (line == wordModel.Word)
+                    {
+                        //need to parse a phrase/sentence
+
+                        if (!line.Contains(" "))
+                        {
+                            foreach (var alignment in wordModel.Alignments)
+                            {
+                                if (alignment.Score > 0)
+                                    Console.WriteLine("...That makes me feel: {0}", alignment.Alignment);
+                            }
+
+                            foreach (var alignment in wordModel.Emotions)
+                            {
+                                if (alignment.Score > 0)
+                                    Console.WriteLine("...That makes me feel emotion: {0}", alignment.Emotion);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //NO OP yet
+                    }
+                }
+
+                // is this a swear word?
+                Censor.LoadLowSeverityWords = false;
+                var isInappropriate = Censor.IsInappropriate(line);
+                if (isInappropriate)
+                {
+                    Console.WriteLine("...Ok, Swearing at me now, huh?!");
+                }
             }
         }
     }

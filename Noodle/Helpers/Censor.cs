@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using NLog.Fluent;
+using Noodle.Annotations;
 
 namespace Noodle.Helpers
 {
@@ -21,7 +22,10 @@ namespace Noodle.Helpers
         {
             //all words
             _allWords = CensorWords.De;
-            _allWords.AddRange(CensorWords.En);
+
+            if(LoadLowSeverityWords)
+                _allWords.AddRange(CensorWords.En);
+
             _allWords.AddRange(CensorWords.Es);
             _allWords.AddRange(CensorWords.Fr);
             _allWords.AddRange(CensorWords.Hi);
@@ -35,6 +39,8 @@ namespace Noodle.Helpers
             //hard stop words
             _hardStopWords = CensorWords.HardStopWords;
         }
+
+        public static bool LoadLowSeverityWords { get; set; }
 
         /// <summary>
         /// Determines whether [is profanity free] [the specified STR].

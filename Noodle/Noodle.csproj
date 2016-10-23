@@ -168,6 +168,7 @@
   <ItemGroup>
     <Resource Include="Research\Dictionary_API.txt" />
     <Resource Include="Research\Restsharp.txt" />
+    <Resource Include="Resources\ResourcesNotes.txt" />
     <Content Include="scheduler.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

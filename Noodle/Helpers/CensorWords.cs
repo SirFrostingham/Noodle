@@ -16,15 +16,25 @@ namespace Noodle.Helpers
         /// </summary>
         public static List<string>  HardStopWords = new List<string>()
             {
+                {"bitch"},
+                {"chink"},
                 {"cunt"},
+                {"darkie"},
                 {"fag"},
+                {"fags"},
+                {"faggot"},
                 {"fuck"},
                 {"fucck"},
                 {"fuk"},
                 {"fuuck"},
+                {"fuck buttons"},
+                {"motherfucker"},
+                {"nigga"},
                 {"nigger"},
+                {"niggers"},
                 {"penis"},
                 {"poop"},
+                {"pussy"},
                 {"shit"},
                 {"shhit"},
                 {"vagina"}

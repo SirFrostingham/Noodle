@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Noodle.Annotations;
 using Noodle.Models;
+using Noodle.Models.Brain;
 using Formatting = System.Xml.Formatting;
 
 namespace Noodle
@@ -53,6 +54,20 @@ namespace Noodle
                 OnPropertyChanged("CurrentSchedule");
                 OnPropertyChanged("Jobs");
                 OnPropertyChanged("JobsInProgress");
+            }
+        }
+
+        private List<WordModel> _wordModels;
+
+        public List<WordModel> WordModels
+        {
+            get { return _wordModels; }
+            set
+            {
+                _wordModels = value;
+                OnPropertyChanged("CurrentSchedule");
+                OnPropertyChanged("WordModels");
+                OnPropertyChanged("WordModelsInProgress");
             }
         }
 

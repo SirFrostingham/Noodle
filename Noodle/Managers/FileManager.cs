@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Noodle.Models;
+using Noodle.Models.Brain;
 using Formatting = System.Xml.Formatting;
 
 namespace Noodle.Managers
@@ -14,6 +15,8 @@ namespace Noodle.Managers
     {
 
         public const string JobsFilename = @"_{0}_jobs.json";
+        public const string ResourcesPath = @".\Resources\";
+        public const string WordModelsFilename = @"WordModel.json";
 
         public void DeletePreviousJobsFile()
         {
@@ -137,6 +140,30 @@ namespace Noodle.Managers
                 jobs = JsonConvert.DeserializeObject<List<Job>>(json);
             }
             return jobs;
+        }
+
+        public static void GetWordModels()
+        {
+            var fileAndPath = string.Format("{0}{1}", ResourcesPath, WordModelsFilename);
+
+            if (File.Exists(fileAndPath))
+            {
+                Globals.Current.WordModels = ReadWordModelsStreamJson(fileAndPath);
+            }
+
+            if (Globals.Current.WordModels == null)
+                Globals.Current.WordModels = new List<WordModel>();
+        }
+
+        private static List<WordModel> ReadWordModelsStreamJson(string fs)
+        {
+            var wordModels = new List<WordModel>();
+            using (var r = new StreamReader(fs))
+            {
+                string json = r.ReadToEnd();
+                wordModels = JsonConvert.DeserializeObject<List<WordModel>>(json);
+            }
+            return wordModels;
         }
     }
 }

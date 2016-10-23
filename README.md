@@ -1,17 +1,22 @@
 Noodle AI
 	- This application is for experimenting with AI
+	- I am no AI genius, but just wanted to mess around with something that is AI'ish :)
 	- It is a functional, work in progress application
 
+	
 Features:
 
 	- Text console/terminal type UI
 	- Defines words
+	- Has English word model (see: 
 	- Reacts to words with alignment and emotion
 	- Ability to detect swear words and potentially censor them
+	- Many other features in progress
 
+	
 Future plans:
 
-	- Learn thoughts
+	- Learn thoughts/words/reactions
 	- Have memories
 	- Process phrases
 	- Reply to phrases/sentences with AI phrases/sentences

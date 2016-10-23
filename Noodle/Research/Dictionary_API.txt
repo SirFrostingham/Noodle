@@ -1,0 +1,23 @@
+﻿Translate json to csharp model:
+	- http://json2csharp.com/
+
+Dictionary + Translation services:
+	- https://glosbe.com/a-api
+		- English example call: https://glosbe.com/gapi/translate?from=eng&dest=eng&format=json&phrase=disgusting&pretty=true
+
+Dictionary service GOOGLE uses (uses suggestions for misspellings):
+	- http://dictionary-lookup.org/
+		- Suggestion example:
+			http://dictionary-lookup.org/disqusting
+		- Suggestion response: 
+			{"suggestions":["disgusting"]}
+		- Use suggestion: http://dictionary-lookup.org/disgusting
+			{"term":"disgusting","audio":[{"type":"US","file":"en-us-disgusting.ogg"}],"meanings":[{"content":"<a href=\"http://en.wiktionary.org/wiki/repulsive\">Repulsive</a>, <a href=\"http://en.wiktionary.org/wiki/distasteful\">distasteful</a>.","type":"adjective"},{"content":"Present participle of <a href=\"http://en.wiktionary.org/wiki/disgust\">disgust</a>.","type":"verb"}]}
+
+Another free dictionary service:
+	- http://services.aonaware.com/DictService/DictService.asmx
+	- Define service: http://services.aonaware.com/DictService/DictService.asmx?op=Define
+
+5/15/16 plan:
+1. Use dictionary-lookup.org 1st to test for misspelling
+2. Use glosbe.com 2nd for simple translation

@@ -1,7 +1,7 @@
 Noodle AI
 	- This application is for experimenting with AI
-	- I am no AI genius, but just wanted to mess around with something that is AI'ish :)
-	- It is a functional, work in progress application
+	- I am not an AI researcher, but my intent is to mess around with something that is AI'ish :)
+	- It is a functional work in progress application
 
 	
 Features:
